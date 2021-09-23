@@ -5294,6 +5294,11 @@ react-native-codegen@^0.0.7:
     jscodeshift "^0.11.0"
     nullthrows "^1.1.1"
 
+react-native-star-io10@^1.0.0:
+  version "1.0.0"
+  resolved "https://registry.yarnpkg.com/react-native-star-io10/-/react-native-star-io10-1.0.0.tgz#e335cb55da2f26071de5eb1b582c90e42f048ca8"
+  integrity sha512-+UNPDcd7Ur4TfzjjsH2apQeisLtPoiG5sXsYadHGZ6hujYQ8tkKnXornoOwTBbOCuBad4NY5Q9WvvQ1auPe0Hg==
+
 react-native@0.65.1:
   version "0.65.1"
   resolved "https://registry.yarnpkg.com/react-native/-/react-native-0.65.1.tgz#bd8cd313e0eb8ddcf08e61e3f8b54b7fc31a418c"
