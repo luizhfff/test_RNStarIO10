@@ -12,6 +12,8 @@ target 'RNStarIO10' do
     :hermes_enabled => false
   )
 
+  pod 'RNFS', :path => '../node_modules/react-native-fs'
+
   target 'RNStarIO10Tests' do
     inherit! :complete
     # Pods for testing

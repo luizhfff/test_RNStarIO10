@@ -7,7 +7,6 @@ import {
   StarPrinter,
 } from 'react-native-star-io10'
 import { Discover } from './Discover'
-import Canvas, { Image } from 'react-native-canvas'
 
 interface Props {}
 
@@ -77,32 +76,6 @@ export class DiscoverContainer extends Component<Props, State> {
     }
   }
 
-  handleCanvas = async (canvas: Canvas) => {
-    if (!canvas) return
-    else {
-      const ctx = canvas.getContext('2d')
-      // ctx.fillStyle = 'white'
-      // ctx.fillRect(0, 0, 100, 100)
-
-      const text = 'text text'
-      // const textMetrics = await ctx.measureText(text)
-
-      // console.log('textMetrics', textMetrics)
-
-      ctx.font = '25px serif'
-      ctx.fillText(text, 0, 25, 100)
-
-      ctx.font = '50px serif'
-
-      // const image = new Image(canvas, 30, 40)
-      // console.log('image', image)
-
-      const imageBase64 = await canvas.toDataURL()
-
-      this.setState({ imageBase64 })
-    }
-  }
-
   render() {
     return (
       <>
@@ -115,8 +88,6 @@ export class DiscoverContainer extends Component<Props, State> {
           printers={this.state.printers}
           imageBase64={this.state.imageBase64}
         />
-
-        <Canvas ref={this.handleCanvas} />
       </>
     )
   }
