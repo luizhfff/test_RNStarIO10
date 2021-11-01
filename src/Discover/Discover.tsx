@@ -158,16 +158,16 @@ const listenPrinter = async (printer: StarPrinter) => {
   } catch (error) {
     console.log(`Error: ${String(error)}`)
   } finally {
-    // await sleep(2000)
-    // await disconnectPrinter(printer)
+    await sleep(2000)
+    await disconnectPrinter(printer)
   }
 }
 
 const disconnectPrinter = async (printer: StarPrinter) => {
   try {
     console.log('-----> disconnectPrinter')
-    await printer.close()
-    await printer.dispose()
+    // await printer.close()
+    // await printer.dispose()
   } catch (error) {
     console.log(`Error: ${String(error)}`)
   }
