@@ -15,27 +15,13 @@ interface Props {
 }
 
 export class PrinterCardContainer extends React.Component<Props> {
-  starConnectionSettings = new StarConnectionSettings()
-
-  _printer = new StarPrinter(this.starConnectionSettings)
-
-  constructor(props: Props) {
-    super(props)
-
-    this.createStarConnectionSettings()
-  }
-
-  createStarConnectionSettings = () => {
-    const printer = this.props.list.item
-
-    this.starConnectionSettings.interfaceType =
-      printer.connectionSettings.interfaceType
-
-    this.starConnectionSettings.identifier =
-      printer.connectionSettings.identifier
-  }
+  private _printer: StarPrinter | undefined = undefined
 
   addListeners = () => {
+    if (!this._printer) {
+      return
+    }
+
     console.log('=> addListeners')
 
     // printerDelegate
@@ -103,6 +89,10 @@ export class PrinterCardContainer extends React.Component<Props> {
   }
 
   disconnectPrinter = async () => {
+    if (!this._printer) {
+      return
+    }
+
     try {
       console.log('-----> disconnectPrinter')
       await this._printer.close()
@@ -113,6 +103,10 @@ export class PrinterCardContainer extends React.Component<Props> {
   }
 
   checkPrinterStatus = async () => {
+    if (!this._printer) {
+      return
+    }
+
     const status = await this._printer.getStatus()
     console.log('--- status ---')
     console.log(status)
@@ -132,6 +126,16 @@ export class PrinterCardContainer extends React.Component<Props> {
     try {
       console.log('-----> opening: Printer')
 
+      console.log('=> this._printer', this._printer)
+
+      const settings = new StarConnectionSettings()
+      const printer = this.props.list.item
+
+      settings.interfaceType = printer.connectionSettings.interfaceType
+      settings.identifier = printer.connectionSettings.identifier
+
+      this._printer = new StarPrinter(settings)
+
       this.addListeners()
 
       await this._printer.open()
@@ -140,8 +144,6 @@ export class PrinterCardContainer extends React.Component<Props> {
       console.log(`Error: ${String(error)}`)
     } finally {
       console.log('-----> printer opened')
-      // await sleep(2000)
-      // await disconnectPrinter(printer)
     }
   }
 
@@ -193,7 +195,9 @@ export class PrinterCardContainer extends React.Component<Props> {
   }
 
   print = async () => {
-    // await this.disconnectPrinter(printer)
+    if (!this._printer) {
+      return
+    }
 
     try {
       console.log('-----> print')
@@ -204,7 +208,7 @@ export class PrinterCardContainer extends React.Component<Props> {
     } catch (error) {
       console.log(`Error: ${String(error)}`)
     } finally {
-      // await disconnectPrinter(printer)
+      console.log('-----> print: done')
     }
   }
 
