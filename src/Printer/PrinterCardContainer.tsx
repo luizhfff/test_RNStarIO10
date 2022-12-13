@@ -15,7 +15,21 @@ interface Props {
 }
 
 export class PrinterCardContainer extends React.Component<Props> {
-  private _printer: StarPrinter | undefined = undefined
+  constructor(props: Props) {
+    super(props)
+  }
+
+  createStarConnectionSettings = (): StarConnectionSettings => {
+    const printer = this.props.list.item
+    const starConnectionSettings = new StarConnectionSettings()
+
+    starConnectionSettings.interfaceType = printer.connectionSettings.interfaceType
+    starConnectionSettings.identifier = printer.connectionSettings.identifier
+    
+    return starConnectionSettings
+  }
+
+  _printer = new StarPrinter(this.createStarConnectionSettings())
 
   addListeners = () => {
     if (!this._printer) {
@@ -128,13 +142,7 @@ export class PrinterCardContainer extends React.Component<Props> {
 
       console.log('=> this._printer', this._printer)
 
-      const settings = new StarConnectionSettings()
-      const printer = this.props.list.item
-
-      settings.interfaceType = printer.connectionSettings.interfaceType
-      settings.identifier = printer.connectionSettings.identifier
-
-      this._printer = new StarPrinter(settings)
+      this._printer = new StarPrinter(this.createStarConnectionSettings())
 
       this.addListeners()
 
